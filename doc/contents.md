@@ -81,5 +81,5 @@ TripleO is a project that aims to allow administrators to deploy a **production*
 
 ## Next Chapter
 
-The next chapter is an overview of the main features of director and the current integration situation, click [here][director-features] to proceed.
+The next chapter is an overview of the main features of director and the current integration situation, click [here][director-features](./director-features.md) to proceed.
 
