@@ -1,16 +1,17 @@
-# OSP director
+# OSP director （ Openstack 导演 ）
 
-## Introduction
+## 介绍
 
-In short, **OSP director** is Red Hat's new installation, configuration, and monitoring toolset for RHEL OSP deployments. OSP director is a convergence of years of upstream engineering work, established tooling created inhouse and tools that came to us via acquisition to create a best of breed deployment tool that's inline with the overall direction of the OpenStack project. We've also packed many years worth of experience and expertise in deploying OpenStack at scale and with best practices into this new offering, ensuring that it will stand the test of time. It replaces existing tools such as the RHEL OSP installer as the **default** deployment tool as shipped with our OpenStack distribution.
+简而言之, **OSP director** 是红帽的新RHEL OSP部署工具，它包涵了安装、配置和监控等工具集。 OSP Director 是收敛性多年的上游工程工作，建立的模具、创建点播、和采用我们通过并购最佳部署工具的总集成部署工具。 我们还对包装多年值得的经验和专门知识在部署 OpenStack 在规模和最佳做法到这个新的产品，确保它经得起时间的考验。 它将替换现有的工具，如 RHEL OSP 安装程序为 * * 默认 * * 部署工具作为附带我们 OpenStack 发布。
 
-The OSP director initiative came from *three* distinct desires-
+OSP director 倡议来自 * 三 * 独特的欲望-
 
-1. The need to **remove** the '*bag of installer*' problem; having one comprehensive, flexible, stable, and supportable deployment tool that caters for the vast majority of customer configurations and requirements. Conveying customer confidence and field ability to execute.<br><br>
-2. To (finally) onboard **upstream** deployment components as they become more *mature*, utilising the strength of community development and tight **integration** with the rest of the OpenStack components. Eliminating the need for us to work on our own *homebrew* tools - with a limited budget for engineering and quality assurance.<br><br>
-3. To have a tool that went **beyond** simply installing an OpenStack environment; previous tools would be 'fire and forget' - once it's installed, the tool has done it's job. But what about ongoing **operational** tasks? Upgrades, patching, monitoring of the environment, capacity planning, utilisation metrics, etc. We needed more than just an installation tool, we needed something that would set us apart from our *competitors*.
+1. 对需要**删除**多安装工具包的问题;有一个全面、 灵活、 稳定和可支持的部署工具，迎合了绝大多数客户的配置和要求。传达客户的信任和字段执行能力。<br><br>
+2. 对 (最后) 采用 **上游** 部署组件,使得他们变得更 *成熟*，利用强度的社区发展和紧**集成**与其余 OpenStack 组件。消除了我们对我们自己工作需要*自制*工具-用有限的预算为工程和质量保证。<br><br>
+3. 有一种工具，去 **超越** 简单地安装 OpenStack 环境;一旦它安装的情况下将 '火和忘记'-以前的工具，工具完成了它的工作。但正在进行什么 **业务** 任务吗?
+升级、 修补、 监测的环境、 容量规划、 利用度量等。我们需要不仅仅是安装工具，我们需要超越的东西。
 
-OSP director has been designed as a much more **comprehensive** offering, being able to satisfy the requirements of the operations team(s) as well as providing a functional **API**-driven interface for configuration, automation, and eventual deployment. Taking the best features and concepts from the existing tools Red Hat has at its disposal from both community and homebrew solutions, into a **converged** deployment:
+OSP director 被设计为更**综合**，能够满足操作的要求团队并提供功能 **API**-驱动的接口，用于配置、 自动化和最终的部署。采取的最好的特点和概念从 Red Hat 有在社区和家酿的解决办法，从其处置入的现有工具 **融合** 部署
 
 <center>
     <img src=./images/installer_roadmap.png>
