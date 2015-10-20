@@ -12,3 +12,7 @@ The OSP director initiative came from *three* distinct desires-
 
 OSP director has been designed as a much more **comprehensive** offering, being able to satisfy the requirements of the operations team(s) as well as providing a functional **API**-driven interface for configuration, automation, and eventual deployment. Taking the best features and concepts from the existing tools Red Hat has at its disposal from both community and homebrew solutions, into a **converged** deployment:
 
+<center>
+    <img src=./images/installer_roadmap.png>
+</center>
+
