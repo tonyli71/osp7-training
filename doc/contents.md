@@ -29,13 +29,13 @@ OSP director 由很多不同组件组成，涵盖 upstream OpenStack 部署项�
 
 和大多数OpenStack部署工具一样, OSP director 有以下机制：
 
-1. *Installing the Installer*
-2. Identification of the **target hosts** - the one's we're installing onto
-3. **Content** management for the **software** to be deployed
-4. Defining the **topology** and **configuration** of the deployment
-5. **Bare metal provisioning** via automated hardware control
-6. **Software** rollout and **configuration** management
-6. Making **modifications** to an already *director-deployed* environment
+1. *安装安装器*
+2. 鉴定 **目标宿主主机** - 我们要安装的主机
+3. 要部署的**软件** **内容**
+4. 定义部署的 **拓扑** 与 **配置** 
+5. 通过自动硬件控制对**裸机进行部署**
+6. 分发**软件** 和 **配置** 管理
+6. 对已通过*director部署的*进行**微调**
 
 OSP director uses a variety of OpenStack components to achieve it's goal of deployment, more specifically, **TripleO** for the creation of images and environment templates, **Ironic** for baremetal control, **Heat** for component definition, ordering, and deployment, and then **Puppet** for post-instantiation configuration. Unlike existing deployment tools, OSP director includes tools that help with testing of hardware, and clears the path for future **operational** tasks such as automated OpenStack **upgrades**, **patch** management, centralised **log** collection, and identification of **problems**. Below, we'll look at each of the individual building blocks of OSP director in more detail, and explain why they're required.
 
