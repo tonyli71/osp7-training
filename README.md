@@ -1,3 +1,5 @@
+<img src=./doc/images/redhat.png style="width: 300px;"/>
+
 RHEL OSP Director 入门培训
 ==================================
 
