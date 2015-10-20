@@ -118,8 +118,8 @@ root
 
 ## 内容
 
-内容由多个章节，引入概念与相关实验室 (如有必要) 您可在任何时间导航到 [内容](contents.md) 页面，但最好在我们开始之前是回顾一下 [现有的部署工具] (existing-tools.md)
+内容由多个章节，引入概念与相关实验室 (如有必要) 您可在任何时间导航到 [内容](./doc/contents.md) 页面，但最好在我们开始之前是回顾一下 [现有的部署工具] (existing-tools.md)
 
 [现有的部署工具](existing-tools.md)
 
-[内容](contents.md)
+[内容](./doc/contents.md)
