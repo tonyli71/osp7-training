@@ -118,7 +118,8 @@ root
 
 ## 内容
 
-内容由多个章节，引入概念与相关实验室 (如有必要) 和要导航到可以从 [内容] 页在任何时间，但最好的地方开始是与 [现有的部署工具] 回顾一下，在我们开始之前的[existing deployment tools][现有] 页面。
+内容由多个章节，引入概念与相关实验室 (如有必要) 您可在任何时间导航到 [内容](contents.md) 页面，但最好在我们开始之前是回顾一下 [现有的部署工具] (existing-tools.md)
 
-[existing](existing-tools.md)
+[现有的部署工具](existing-tools.md)
+
 [内容](contents.md)
