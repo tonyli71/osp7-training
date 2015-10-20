@@ -4,7 +4,7 @@
 
 简而言之, **OSP director** 是红帽的新RHEL OSP部署工具，它包涵了安装、配置和监控等工具集。 OSP Director 是收敛性多年的上游工程工作，建立的模具、创建点播、和采用我们通过并购最佳部署工具的总集成部署工具。 我们还对包装多年值得的经验和专门知识在部署 OpenStack 在规模和最佳做法到这个新的产品，确保它经得起时间的考验。 它将替换现有的工具，如 RHEL OSP 安装程序为 * * 默认 * * 部署工具作为附带我们 OpenStack 发布。
 
-OSP director 倡议来自 * 三 * 独特的欲望-
+OSP director 倡议来自 *三* 独特的欲望-
 
 1. 对需要**删除**多安装工具包的问题;有一个全面、 灵活、 稳定和可支持的部署工具，迎合了绝大多数客户的配置和要求。传达客户的信任和字段执行能力。<br><br>
 2. 对 (最后) 采用 **上游** 部署组件,使得他们变得更 *成熟*，利用强度的社区发展和紧**集成**与其余 OpenStack 组件。消除了我们对我们自己工作需要*自制*工具-用有限的预算为工程和质量保证。<br><br>
@@ -45,9 +45,9 @@ OSP director使用各种 OpenStack 组件来实现它的目标的部署, 更具�
 
 理解 **TripleO** 或 " **O** penStack- **o** n- **O** penStack" 的概念是非常重要的。 OSP director 非常深入采用TripleO于部署、配置、自动化。 因此部署 OpenStack 使用此工具集的任何人都必须了解 **undercloud** 与 **overcloud** 的概念.
 
-TripleO 是一个项目，目的是让管理员可以通过现有的 ** 部署 ** OpenStack 环境 (利用 OpenStack 组件的子集)部署，** 生产 ** 云 (在那里 * 工作负载 * 将运行) 。 ** 生产 ** 云被称为" ** overcloud ** "和底层 OpenStack ** 部署 ** 云被称为" ** undercloud ** "。 在任何 ** overcloud ** 可以部署前，** undercloud ** 必须进行配置。以前的安装机制并没有 undercloud 的概念，他们只是用他们自己的平台直接部署一个"overcloud"。
+TripleO 是一个项目，目的是让管理员可以通过现有的 **部署** OpenStack 环境 (利用 OpenStack 组件的子集)部署，**生产** 云 (在那里 *工作负载* 将运行) 。 **生产** 云被称为" **overcloud** "和底层 OpenStack **部署** 云被称为" **undercloud** "。 在任何 **overcloud** 可以部署前，**undercloud** 必须进行配置。以前的安装机制并没有 undercloud 的概念，他们只是用他们自己的平台直接部署一个"overcloud"。
 
-> ** 注意 ** : ** undercloud ** 通常被认为是" ** baremetal ** 云"，其中" ** 工作 ** "的那朵云是 ** overcloud ** 节点本身，例如控制器节点和计算/虚拟机监控程序节点。
+> **注意** : **undercloud** 通常被认为是" **baremetal** 云"，其中" **工作** "的那朵云是 **overcloud** 节点本身，例如控制器节点和计算/虚拟机监控程序节点。
 
 <br><center>
     <img src=./images/logical_view.png>
