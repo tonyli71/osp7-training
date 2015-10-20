@@ -112,4 +112,4 @@ The automation of the image creation and validation of the configuration is driv
 
 ## Next Chapter
 
-The next chapter is an introduction to the OSP director, click [here][director-intro](./doc/contents.md) to proceed.
+The next chapter is an introduction to the OSP director, click [here][director-intro](./contents.md) to proceed.
