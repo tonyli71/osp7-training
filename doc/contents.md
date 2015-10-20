@@ -17,3 +17,12 @@ OSP director 被设计为更**综合**，能够满足操作的要求团队并提
     <img src=./images/installer_roadmap.png>
 </center>
 
+Red Hat 将聚焦主任向前发展，其发展，但很可能会保留另一个释放或两，取决于导演的功能集是如何演变 Packstack。
+
+## 架构
+
+OSP director 由很多不同组件组成，涵盖 upstream OpenStack 部署项目 (namely, **TripleO** and associated **Ironic**) ，这些组件已经成熟，并可用于生产。 并且含有红帽的增强工具集。它的架构如下:<br><br>
+
+<center>
+    <img src=./images/converged_installer_components.png>
+</center>
