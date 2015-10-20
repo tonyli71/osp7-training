@@ -37,17 +37,17 @@ OSP director 由很多不同组件组成，涵盖 upstream OpenStack 部署项�
 6. 分发**软件** 和 **配置** 管理
 6. 对已通过*director部署的*进行**微调**
 
-OSP director使用各种 OpenStack 组件来实现它的目标的部署, 更具体地说, **TripleO用来制作镜像和环境模板, **Ironic** 用来对裸机控制, **Heat** 用来对组件定义、关系及部署, **Puppet** 用来对安装后的配置. 不同于现有的部署工具, OSP director 包含的工具可以帮助测试硬件, 为未来 * * 业务 * * 任务，如自动 OpenStack ** 升级 ** 扫清了道路, **补丁** 管理, 集中 **日志** 收集, 定位 **问题**. 下面，我们会看看每个构建基块的 OSP director更多的细节，并解释为什么需要他们。
+OSP director使用各种 OpenStack 组件来实现它的目标的部署, 更具体地说, **TripleO** 用来制作镜像和环境模板, **Ironic** 用来对裸机控制, **Heat** 用来对组件定义、关系及部署, **Puppet** 用来对安装后的配置. 不同于现有的部署工具, OSP director 包含的工具可以帮助测试硬件, 为未来 ** 业务 ** 任务，如自动 OpenStack ** 升级 ** 扫清了道路, **补丁** 管理, 集中 **日志** 收集, 定位 **问题** . 下面，我们会看看每个构建基块的 OSP director更多的细节，并解释为什么需要他们。
 
 > **NOTE** -我们会进入更多的细节，在未来的章节和实验室，帮助集成这些组件之间的理解，给你当前的功能集的概述。
 
 ## TripleO
 
-理解**TripleO** 或 "**O**penStack-**o**n-**O**penStack" 的概念是非常重要的。 OSP director 非常深入采用TripleO于部署、配置、自动化。 因此部署 OpenStack 使用此工具集的任何人都必须了解 **undercloud** 与 **overcloud** 的概念.
+理解 **TripleO** 或 " **O** penStack- **o** n- **O** penStack" 的概念是非常重要的。 OSP director 非常深入采用TripleO于部署、配置、自动化。 因此部署 OpenStack 使用此工具集的任何人都必须了解 **undercloud** 与 **overcloud** 的概念.
 
-TripleO 是一个项目，目的是让管理员可以通过现有的 ** 部署 ** OpenStack 环境 (利用 OpenStack 组件的子集)部署，* * 生产 * * 云 (在那里 * 工作负载 * 将运行) 。 ** 生产 ** 云被称为"** overcloud **"和底层 OpenStack ** 部署 ** 云被称为"** undercloud **"。 在任何 ** overcloud ** 可以部署前，** undercloud ** 必须进行配置。以前的安装机制并没有 undercloud 的概念，他们只是用他们自己的平台直接部署一个"overcloud"。
+TripleO 是一个项目，目的是让管理员可以通过现有的 ** 部署 ** OpenStack 环境 (利用 OpenStack 组件的子集)部署，** 生产 ** 云 (在那里 * 工作负载 * 将运行) 。 ** 生产 ** 云被称为" ** overcloud ** "和底层 OpenStack ** 部署 ** 云被称为" ** undercloud ** "。 在任何 ** overcloud ** 可以部署前，** undercloud ** 必须进行配置。以前的安装机制并没有 undercloud 的概念，他们只是用他们自己的平台直接部署一个"overcloud"。
 
-> ** 注意 **: ** undercloud ** 通常被认为是"** baremetal ** 云"，其中"** 工作 **"的那朵云是 ** overcloud ** 节点本身，例如控制器节点和计算/虚拟机监控程序节点。
+> ** 注意 ** : ** undercloud ** 通常被认为是" ** baremetal ** 云"，其中" ** 工作 ** "的那朵云是 ** overcloud ** 节点本身，例如控制器节点和计算/虚拟机监控程序节点。
 
 <br><center>
     <img src=./images/logical_view.png>
