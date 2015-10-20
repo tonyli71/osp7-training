@@ -129,6 +129,13 @@ NeutronBridgeMappings:
 
 ## Puppet
 
+Puppet最初被设计为 **配置管理** 和 **执法工具**;作为一种机制用来描述机器的最终状态，并保持这种方式。Puppet本质上支持两种模式，**独立** 在哪些指令的形式模式 **体现** 跑本地，和 **服务器** 在哪里它从中央服务器中检索及其清单的模式。管理员可以使 **变化** 通过将新的清单上传到一个节点并执行他们本地，或通过修改在客户端/服务器模型中 **puppet-master**。
+
+Puppet是 *高度可扩展*，Red Hat 已经推使用它到机制。今天，我们在director许多领域用Puppet，确定如下:
+
+1.作为一部分的 **undercloud** 安装，我们利用的Puppet根据**undercloud.conf**中列出的配置安装和配置本地包 。
+2.Director 是 **基于镜像的** 解决方案，我们 **注入** *openstack-Puppet-模块* 成最终将部署在镜像 **overcloud** 建设过程中。这些Puppet模块然后将准备 **后实例化配置** 在部署时间。默认情况下，我们创建"*full fat*"包含所有 OpenStack 服务并将它用于所有节点的图像。
+
 ## Unified CLI
 
 ## Components taken from SpinalStack
