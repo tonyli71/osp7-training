@@ -53,6 +53,10 @@ TripleO 是一个项目，目的是让管理员可以通过现有的 **部署** 
     <img src=./images/logical_view.png>
 </center>
 
+<br>进一步澄清，TripleO 主张使用 **自身** OpenStack API 来配置、 部署和管理 OpenStack 环境本身。 利用这种 API 与 OSP 导演的主要好处是他们好 **记录**，去通过广泛 **集成测试** 上游，是成熟的对于那些已经熟悉 OpenStack 的工作方式，它是很容易理解 TripleO (director) 的工作原理。 因此，社区的功能增强，安全修补程序、 和 bug 修复是自动 **继承** 到 OSP Director中。
+
+除了使用 OpenStack 部署 OpenStack **概念** ，TripleO 项目实际上是什么? 可以认为 TripleO **胶合** 驻留在组件之间 **undercloud** ，允许管理员定义什么 **overcloud** 环境看起来就像 — — 它了解 **设计模式** 与部署 OpenStack 环境相关联，并且可以进行定制部署种类繁多的定制配置。 TripleO 附带工具、 实用工具以及用于创建示例模板 **模板** 定义环境和相关 **镜像** 支持实例化此类配置。
+
 ## Tuskar
 
 ## Ironic
