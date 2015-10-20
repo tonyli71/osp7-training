@@ -120,5 +120,5 @@ root
 
 内容由多个章节，引入概念与相关实验室 (如有必要) 和要导航到可以从 [内容] 页在任何时间，但最好的地方开始是与 [现有的部署工具] 回顾一下，在我们开始之前的[existing deployment tools][现有] 页面。
 
-[contents]: ./contents.html "Contents Page"
-[existing]: ./existing-tools.html "Existing Deployment Tools"
+[existing](existing-tools.md)
+[内容](contents.md)
