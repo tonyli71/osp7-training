@@ -135,6 +135,7 @@ Puppet是 *高度可扩展*，Red Hat 已经推使用它到机制。今天，我
 
 1.作为一部分的 **undercloud** 安装，我们利用的Puppet根据**undercloud.conf**中列出的配置安装和配置本地包 。
 2.Director 是 **基于镜像的** 解决方案，我们 **注入** *openstack-Puppet-模块* 成最终将部署在镜像 **overcloud** 建设过程中。这些Puppet模块然后将准备 **后实例化配置** 在部署时间。默认情况下，我们创建"*full fat*"包含所有 OpenStack 服务并将它用于所有节点的图像。
+3.当 **overcloud** 正在部署，我们提供额外 **体现** 和 **参数** 到通过节点 **热**，和应用 (如由管理员指定) 如与Puppet，所需的配置其中 **服务** 启用/启动和 **OpenStack 配置** 申请-这些将 **节点依赖**。
 
 ## Unified CLI
 
