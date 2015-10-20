@@ -52,3 +52,34 @@ TripleO is a project that aims to allow administrators to deploy a **production*
 <br><center>
     <img src=./images/logical_view.png>
 </center>
+
+## Tuskar
+
+## Ironic
+
+<br><center>
+    <img src=./images/discovery_diagram.png>
+</center>
+
+## Heat
+
+<center>
+    <img src=./images/resource-list.png>
+</center>
+
+## Puppet
+
+## Unified CLI
+
+## Components taken from SpinalStack
+
+## Support and Lifecycle
+
+<center>
+    <img src=./images/ospd-lifecycle.png>
+</center>
+
+## Next Chapter
+
+The next chapter is an overview of the main features of director and the current integration situation, click [here][director-features] to proceed.
+
