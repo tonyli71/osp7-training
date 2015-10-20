@@ -26,3 +26,29 @@ OSP director 由很多不同组件组成，涵盖 upstream OpenStack 部署项�
 <center>
     <img src=./images/converged_installer_components.png>
 </center>
+
+和大多数OpenStack部署工具一样, OSP director 有以下机制：
+
+1. *Installing the Installer*
+2. Identification of the **target hosts** - the one's we're installing onto
+3. **Content** management for the **software** to be deployed
+4. Defining the **topology** and **configuration** of the deployment
+5. **Bare metal provisioning** via automated hardware control
+6. **Software** rollout and **configuration** management
+6. Making **modifications** to an already *director-deployed* environment
+
+OSP director uses a variety of OpenStack components to achieve it's goal of deployment, more specifically, **TripleO** for the creation of images and environment templates, **Ironic** for baremetal control, **Heat** for component definition, ordering, and deployment, and then **Puppet** for post-instantiation configuration. Unlike existing deployment tools, OSP director includes tools that help with testing of hardware, and clears the path for future **operational** tasks such as automated OpenStack **upgrades**, **patch** management, centralised **log** collection, and identification of **problems**. Below, we'll look at each of the individual building blocks of OSP director in more detail, and explain why they're required.
+
+>**NOTE** -我们会进入更多的细节，在未来的章节和实验室，帮助集成这些组件之间的理解，给你当前的功能集的概述。
+
+## TripleO
+
+The notion of **TripleO** or "**O**penStack-**o**n-**O**penStack" is the most important concept to understand. OSP director utilises TripleO heavily for deployment, configuration, and automation. Therefore anyone that deploys OpenStack using this toolset must understand the concept of **undercloud** vs **overcloud**.
+
+TripleO is a project that aims to allow administrators to deploy a **production** cloud (where *workloads* will run) via an existing **deployment** OpenStack environment (utilising a subset of OpenStack components). The **production** cloud is known as the "**overcloud**" and the underlying OpenStack **deployment** cloud is known as the "**undercloud**". Before any **overcloud** can be deployed, an **undercloud** must be configured. Previous installation mechanisms did not have the concept of an undercloud, they just used their own platform to deploy directly to an "overcloud".
+
+> **NOTE**: The **undercloud** is often thought of as the "**baremetal** cloud", where the "**workload**" of that cloud is the **overcloud** nodes themselves, e.g. controller nodes and compute/hypervisor nodes.
+
+<br><center>
+    <img src=./images/logical_view.png>
+</center>
