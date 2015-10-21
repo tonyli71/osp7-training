@@ -205,7 +205,7 @@ mysql_root_password  => hiera(‘openstack::controller::mysql_root_password’)
     <img src=./images/ospd-lifecycle.png>
 </center>
 
-> **注意**: 生产阶段的详细信息，可以发现 [这里] [Production Support]（https://access.redhat.com/support/policy/updates/openstack/platform）。
+> **注意**: 生产阶段的详细信息，可以发现 [这里] [Production Support] (https://access.redhat.com/support/policy/updates/openstack/platform)
 
 OSP 主任每个主要版本还将点的版本中，每个 **两个月**，引入 **新功能**，例如支持新 OpenStack **功能** 如以前在技术预览版状态，提供技术 **bug 修复** 和 **安全修补程序**，并使第三方驱动程序 (例如，新认证Neutron或Cinder插件) 外对齐方式与基本的核心。这些点的版本将 **不** 引入任何破坏或更改底层核心功能。
 
