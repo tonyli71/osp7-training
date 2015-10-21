@@ -137,7 +137,20 @@ Puppet是 *高度可扩展*，Red Hat 已经推使用它到机制。今天，我
 2.Director 是 **基于镜像的** 解决方案，我们 **注入** *openstack-Puppet-模块* 成最终将部署在镜像 **overcloud** 建设过程中。这些Puppet模块然后将准备 **后实例化配置** 在部署时间。默认情况下，我们创建"*full fat*"包含所有 OpenStack 服务并将它用于所有节点的图像。
 3.当 **overcloud** 正在部署，我们提供额外 **体现** 和 **参数** 到通过节点 **热**，和应用 (如由管理员指定) 如与Puppet，所需的配置其中 **服务** 启用/启动和 **OpenStack 配置** 申请-这些将 **节点依赖**。
 
-## Unified CLI
+当清单的推出到节点时，它们常常免费从站点或特定于节点的参数，以保证清单一致，这样，我们还分发了元数据称为 ' **hieradata**' 到的节点，所以那个Puppet只需要请求时所需的特定于节点的信息。
+例如，若要引用清单内的 MySQL 密码，您可以将此信息保存到 hiera，和 **引用** 它从内向清单;你只需要改变 hieradata 在每个节点的基础上:
+
+~~~
+(As taken from the Hiera data)
+# grep mysql_root_password hieradata.yaml
+openstack::controller::mysql_root_password: ‘redhat123’
+
+(Now referenced in the Puppet manifest)
+# grep mysql_root_password example.pp
+mysql_root_password  => hiera(‘openstack::controller::mysql_root_password’)
+~~~
+
+## 统一的命令行
 
 ## Components taken from SpinalStack
 
