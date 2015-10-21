@@ -152,15 +152,65 @@ mysql_root_password  => hiera(‘openstack::controller::mysql_root_password’)
 
 ## 统一的命令行
 
-## Components taken from SpinalStack
+统一的 CLI 是重要和 **积分** 的 OSP Director组件。所有我们上面提到过的组件有自己的界面，无论是 API 或命令直接调用。无论哪种方式，它将很难和 **费力** 来直接调用每个组件和管理交互来实现所需的部署。OSP Director提供统一的 CLI，**简化了** 的使用工具，如安装 undercloud 和 overcloud 与自己各自的单个命令。
 
-## Support and Lifecycle
+我们提供 OSP 主任统一的 CLI 也是 * * 上游 * * 组件，* * 插件 * * 到上游 * * OpenStackClient * * 工具集(http://docs.openstack.org/developer/python-openstackclient/).它添加在 undercloud 和 overcloud 的扩展来允许我们对接口主任工具和实用程序与本机 OpenStack API 正在使用。
+
+**示例** 的统一的 cli **用法** 如下所示:
+
+~~~
+(复制示例 undercloud 配置文件，并自定义它)
+# cp /usr/share/instack-undercloud/undercloud.conf.sample ~/undercloud.conf
+# vi undercloud.conf
+
+(使用统一的 CLI  OSP 主任插件部署)
+# openstack undercloud install
+...
+
+(复制本地，一些预建的镜像并将其上载到Glance的部署)
+# cp -r /tmp/images/* ~/overcloud-images/
+# cd ~/overcloud-images/
+# openstack overcloud image upload
+~~~
+
+这使我们能够符合收敛到主流用法要替换的 'openstack' 命令的 **弃用** 由每个组件提供的个别 CLI 工具。它还允许我们可以利用现有的 rc 文件被用来定义凭据，例如' * keystonerc_admin *'。
+
+## 从SpinalStack 引进的组件
+
+在获取后的 eNovance，Red Hat 获得宝贵和生产测试技术 OpenStack 部署在 **eDeploy** 和 **SpinalStack**。虽然我们继续投资于此类组件的客户，我们选择采取最好的想法和重用功能从这些技术和 **集成** 他们入 OSP 主任不同。SpinalStack 启发了很多发展为 OSP 的主任，和我们继续对齐的上游的工具和我们下游的 OSP 主任提供由 eNovance 规定的原则。
+
+我们从 SpinalStack 运来的主要特点是 **高级配置文件匹配** 功能。我们将部署我们的 overcloud 之前，我们通常要检查的机器为他们 **配置**，如果它们匹配预期的理解 **规范**，和发现不符合预期的任何节点 **的基准性能** （黑羊检测）。我们称这个过程 **反思**-它使我们能够启动与机器 **ramdisk** 收集主机的详细的信息。信息由称为组件提供给我们 **ironic-discoverd**，填补了 **Ironic** 与节点细节/事实数据库。
+
+我们使用 '**ahc-工具**' 包采取举行具有讽刺意味的数据库中的信息，然后匹配 **角色** 与 **节点** 基于其 **特点**。匹配规则设置使用 AHC 配置文件;作为一个例子，如果我们想要确保已经大于 (或等于) 32g 内存的任何节点被分配计算节点的作用我们可以使用以下配置:
+
+~~~
+# cat /etc/ahc-tools/edeploy/compute.specs
+[
+ ('memory', 'total', 'size', 'ge(34359738368)'),
+]
+~~~
+
+与最小值不匹配的任何节点 *4000 bogomips* 会 **排除** 从上面的例子中的控制器节点。
+
+> **注意**: 标杆管理是一个非常详尽的过程，并且需要时间来操作。如果你做与虚拟机作为您的基础架构部署要避免使用该选项。
+
+## 支持和生命周期
+
+第一，我们已经分开的潜在生命周期 **核心**，即我们 OpenStack 分布，与 **部署工具**。根据以前版本的 RHEL OSP，每个主要 **核心** (同时，安装程序) 收到三年支持生命周期，该生命周期为核心将继续是三年，但 **OSP 主任** 会 **两年**。鉴于 **工程开销** 在提供向后兼容性和自动的升级到较新的版本，尤其是在定制部署，整体生命周期 *有* 将减少。
+
+在这两年，整个 Red Hat 将确保向后兼容性维持为至少 **两个** 以前基本核心版本，允许 OSP 主任平台向 overcloud 通过介绍新功能 **自动升级**。例如，当 RHEL OSP **9.0 (Mitaka)** 是公布，最新的 OSP 导演将能够管理 OSP ** 7.0** **8.0** 和 **9.0** 环境，以及运行自动的升级。
+
 
 <center>
     <img src=./images/ospd-lifecycle.png>
 </center>
 
-## Next Chapter
+> **注意**: 生产阶段的详细信息，可以发现 [这里] [Production Support]（https://access.redhat.com/support/policy/updates/openstack/platform/）。
 
-The next chapter is an overview of the main features of director and the current integration situation, click [here][director-features](./director-features.md) to proceed.
+OSP 主任每个主要版本还将点的版本中，每个 **两个月**，引入 **新功能**，例如支持新 OpenStack **功能** 如以前在技术预览版状态，提供技术 **bug 修复** 和 **安全修补程序**，并使第三方驱动程序 (例如，新认证Neutron或Cinder插件) 外对齐方式与基本的核心。这些点的版本将 **不** 引入任何破坏或更改底层核心功能。
+
+## 下一章
+
+下一章是概述主任和整合现状的主要特点，点击 [这里] [主任-功能] (./director-features.md) 继续。
+
 
