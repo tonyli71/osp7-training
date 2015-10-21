@@ -99,6 +99,8 @@ host# virsh net-dumpxml default
 </network>
 ~~~
 
+我们可以使用不需要改变这个网络，它对应于子网上面的图片中所述 (**192.168.122.0/24**)。我们创建的每个 VM 将有一个接口，使我们能够访问此网络上的 **直接** 从我们虚拟机监控程序。我们需要创建另一个网络来代表我们 **资源调配 / 网络管理**。让我们这起上我们的主人，首先通过设置 **定义** XML，**输入** 到 libvirt，细节和 **开始** 它:
+
 ## Next Lab
 
 The next lab will be the configuration of the undercloud, click [here][lab02](./lab02.md) to proceed.
