@@ -20,4 +20,8 @@
 <img src="./images/osp-director-workflow.png"/>
 </center>
 
+## 一般可用性功能
+
+这个 enablement 的 OSP 主任在 GA RHEL OSP 7.0 状态附近集中，是 **第一** 迭代的工具。与 *快速* 上游释放节奏的底层核心 OpenStack 组件，我们已经 **优先** 某些功能进入遗传算法与其他项目留下的路线图中 **每2月的发放节奏** 的 OSP 主任。GA 释放的共同主题已经 **一致性** 我们现有的部署与 **最佳-做法**;因此，OSP 导演的部署环境，应为 **相同** 的 RHEL OSP 安装程序部署环境 (**Staypuft**)。
+
 下一章我们开始 **hands-on labs**; we'll go through a lot of detail in the content and by putting the theory into practice. Let's ensure we have adequate connectivity to the dedicated lab that's been set up, click [here][labs-setup](./labs-setup.md) to proceed.
