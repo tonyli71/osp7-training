@@ -20,6 +20,11 @@
     <img src=./images/lab_arch2.png>
 </center>
 
+然后，我们会使用 **libvirt** 来定义将准确地表示我们会如插入我们 OpenStack 部署的客户网络的逻辑网络公共管理/内部存储，、 群集网络。虚拟机监控程序内这样做允许我们拓扑结构的完全控制权，给我们完成 **隔离** 从其他实验室与会者虽然不必担心外部开关:
+
+<center>
+    <img src=./images/lab_arch3.png>
+</center>
 
 ## Next Chapter
 
