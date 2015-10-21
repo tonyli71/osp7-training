@@ -8,8 +8,8 @@
 
 正如所有的 Red Hat 技术，是有相对应的 **上游** 项目，"**RDO 经理**"我们专注于 **上游第一** 发展模式;所有功能都推向上游 RDO 经理和各自的上游 OpenStack 存储库拉下来之前我们 **下游** RHEL OSP 主任提供。详细信息可以在这里找到:
 
-* Project Overview (https://www.rdoproject.org/RDO-Manager)
-* Git Repository - (https://www.github.com/rdo-management)
+* [Project Overview] (https://www.rdoproject.org/RDO-Manager)
+* [Git Repository] (https://www.github.com/rdo-management)
 * 如果你想要 [贡献] (https://repos.fedorapeople.org/repos/openstack-m/docs/master/contributions/contributions.html#contributing-code) ，我们欢迎您的参与！<br><br>
 
 下一章我们开始 **hands-on labs**; we'll go through a lot of detail in the content and by putting the theory into practice. Let's ensure we have adequate connectivity to the dedicated lab that's been set up, click [here][labs-setup](./labs-setup.md) to proceed.
