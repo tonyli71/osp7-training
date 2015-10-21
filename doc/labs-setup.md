@@ -63,7 +63,68 @@ root
 host# exit
 ~~~
 
+> **注意**: 如果你想要使用 **不同** 键，简单地取代内的密钥文件的位置 '**-i**' 参数;您可能需要指定此关键字的位置，试图通过 SSH，重新连接，默认情况下它查找文件时 '**~/.ssh/id_rsa.pub**'。如果你不已经 SSH 密钥，只需使用命令 '**ssh-keygen**' 和使用所有的默认值。
 
-## Next Chapter
+## Package Access
 
-The next chapter is the start of our **hands-on labs** and will be the configuration of our 'seed host', i.e. the one we'll use for the **undercloud**, click [here][lab1](./lab01.md) to proceed.
+您已分配的节点将不启用任何软件包存储库，所以之前我们进展到第一个实验室，让我们确保已经这样了，你能够安装软件包。请注意，我们是 **不** 使用订阅管理器中，我们将使用内部存储库，主要是为了便于和 **性能**:
+
+First install the **rhos-release** rpm package:
+~~~
+client$ ssh root@<your given host>
+host# rpm -ivh http://XXX.XXX.XXX.XXX/repos/rhos-release/rhos-release-latest.noarch.rpm
+(...)
+~~~
+
+然后，启用"0_Day"OSP 主任和 RHEL OSP 软件包;这些将 * * 镜像 * * 您的客户目前看到什么，即遗传算法包，再加上 0 天修复。
+
+~~~
+host# rhos-release -p 0_Day 7-director
+Installed: /etc/yum.repos.d/rhos-release-7-director-rhel-7.1.repo
+director requires the core repo as well, Installing...
+Installed: /etc/yum.repos.d/rhos-release-7-rhel-7.1.repo
+~~~
+
+最后，添加 A1 RHEL 7 套餐，我们有最新的客户，面对 * * RHEL 7.1* * 位太。我们可以确认这通过运行一个简单的 'yum update':
+
+~~~
+host# rhos-release -p A1 7
+Installed: /etc/yum.repos.d/rhos-release-7-rhel-7.1.repo
+
+host# yum update -y
+(...)
+~~~
+
+> **注意**: 你可能会看到错误，如 **rhos-release*' 已经安装 rpm。这是 *确定*，我们只在确保你底层主机的配置正确，在我们开始下一实验室之前。与 0_Day 回购相关联的核心回购就是坏了，因此为什么我们指定 A1 释放 **分开**。
+
+下一步，使 * * 嵌套 KVM * *，我们可以加速嵌套虚拟化:
+
+~~~
+host# cat << EOF > /etc/modprobe.d/kvm_intel.conf
+options kvm-intel nested=1
+options kvm-intel enable_shadow_vmcs=1
+options kvm-intel enable_apicv=1
+options kvm-intel ept=1
+EOF
+~~~
+
+我们还需要禁用 **rp_filter**，让我们的虚拟机与以后任务的底层主机进行通信:
+
+~~~
+host# cat << EOF > /etc/sysctl.d/98-rp-filter.conf
+net.ipv4.conf.default.rp_filter = 0
+net.ipv4.conf.all.rp_filter = 0
+EOF
+~~~
+
+现在，我们已经完全 **更新** 我们机并进行了一些配置更改，让我们重新启动以确保我们开始从完全更新，和干净的状态:
+
+~~~
+host# reboot
+~~~
+
+> **注意**: 当我们在处理 **baremetal** 服务器，这可能需要几分钟来完成，并再次变得可用。
+
+## 下一章
+
+下一章是开始我们 **动手实验室**，将主机的配置中我们' 种子'，即我们将使用一个 **undercloud**，请点击 [这里] [lab1](./lab01.md)进行。
