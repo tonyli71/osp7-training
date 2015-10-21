@@ -75,6 +75,29 @@ Overcloud 节点将通过 undercloud 节点中的通过部署 **PXE**-undercloud
     <img src=./images/basic_networks.png>
 </center>
 
+> **注意**: 如上所示的节点计数例如纯粹是目的，我们将部署中的 HA 配置要比这更多的控制器节点。
+
+**公共 / 外部** 网络已经为我们内创建 **libvirt**，并且已经有 **DHCP** 默认情况下启用了，我们会需要这个来帮助我们引导:
+
+~~~
+host# virsh net-dumpxml default
+<network>
+  <name>default</name>
+  <uuid>55e6e167-ee39-4747-a158-6aa80c0a38d6</uuid>
+  <forward mode='nat'>
+    <nat>
+      <port start='1024' end='65535'/>
+    </nat>
+  </forward>
+  <bridge name='virbr0' stp='on' delay='0'/>
+  <mac address='52:54:00:13:4f:ae'/>
+  <ip address='192.168.122.1' netmask='255.255.255.0'>
+    <dhcp>
+      <range start='192.168.122.2' end='192.168.122.254'/>
+    </dhcp>
+  </ip>
+</network>
+~~~
 
 ## Next Lab
 
