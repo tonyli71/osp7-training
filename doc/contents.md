@@ -154,7 +154,7 @@ mysql_root_password  => hiera(‘openstack::controller::mysql_root_password’)
 
 统一的 CLI 是重要和 **积分** 的 OSP Director组件。所有我们上面提到过的组件有自己的界面，无论是 API 或命令直接调用。无论哪种方式，它将很难和 **费力** 来直接调用每个组件和管理交互来实现所需的部署。OSP Director提供统一的 CLI，**简化了** 的使用工具，如安装 undercloud 和 overcloud 与自己各自的单个命令。
 
-我们提供 OSP 主任统一的 CLI 也是 **上游** 组件，**插件** 到上游 **OpenStackClient** ［工具集］( http://docs.openstack.org/developer/python-openstackclient ) 
+我们提供 OSP 主任统一的 CLI 也是 **上游** 组件，**插件** 到上游 **OpenStackClient** (http://docs.openstack.org/developer/python-openstackclient) [工具集]  
 。它添加在 undercloud 和 overcloud 的扩展来允许我们对接口主任工具和实用程序与本机 OpenStack API 正在使用。
 
 **示例** 的统一的 cli **用法** 如下所示:
