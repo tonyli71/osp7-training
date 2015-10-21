@@ -14,6 +14,13 @@
     <img src=./images/lab_arch1.png>
 </center>
 
+非常 *简化* 为目的的概述-此主机体系结构将用于部署数量的虚拟机，将使两个你 **undercloud** 和你 **overcloud**，与主机本身被虚拟电源管理平台，**Ironic** 将用于启动机器。我们可以很容易地使用虚拟机管理程序本身作为 undercloud，但清洁我们会部署在它自己的虚拟机 undercloud:
+
+<center>
+    <img src=./images/lab_arch2.png>
+</center>
+
+
 ## Next Chapter
 
 The next chapter is the start of our **hands-on labs** and will be the configuration of our 'seed host', i.e. the one we'll use for the **undercloud**, click [here][lab1](./lab01.md) to proceed.
