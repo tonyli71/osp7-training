@@ -36,11 +36,33 @@
 
 ## 实验室环境
 
-实验室环境描述如下;我们有一个 **baremetal** 主机提供我们 **虚拟** 基础设施，使两个我们 **undercloud** 和 **overcloud **:
+实验室环境描述如下;我们有一个 **baremetal** 主机提供我们 **虚拟** 基础设施，使两个我们 **undercloud** 和 **overcloud**:
 
 <center>
     <img src="images/osp-director-env-1.png"/>
 </center>
+
+## 连接
+
+为这台机器已为课程的时间分配给你，我们建议您部署您 **公** 安全壳关键从您的客户端 (例如你的笔记本电脑/台式机机) 到你已经被分配的节点。让我们确保我们可以成功地访问我们的环境、 根密码应设置为 **Redhat01** '，如果这不是案例请让老师知道。用你已经被分配的节点的 IP 地址替换**"\<your given host\>"**:
+
+~~~
+client$ ssh root@<your given host>
+host# disconnect
+~~~
+
+请确保你断开连接，然后让我们从您的便携式计算机客户端上载您安全壳的密钥。它会要求你再一次，指定的根密码，然后就可以到 ssh 进入宿主 **不** 警用密码:
+
+~~~
+client$ ssh-copy-id -i ~/.ssh/id_rsa.pub root@<your given host>
+(enter root password)
+
+client$ ssh root@<your given host>
+host# whoami
+root
+host# exit
+~~~
+
 
 ## Next Chapter
 
