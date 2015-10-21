@@ -26,6 +26,14 @@
     <img src=./images/lab_arch3.png>
 </center>
 
+> **注意**: VLAN 的代表以上 **任意** 用于实验室环境的解释并不确切地描绘我们会在以后的实验室中部署的环境。本文将详细彻底在适当的时候。
+
+然后，我们将创建一组空的虚拟机的虚拟机监控程序将成为 **overcloud** 和定义他们对 **undercloud** 所以，它可以提供他们请求时。虚拟机做的非常快速和易于管理的同时不影响客户部署的现实。为了澄清下, 图显示了 undercloud deplpoying overcloud 机器;它实际上调用底层的虚拟机监控程序通电虚拟机 — — 这是 **exact** 同样的过程对于裸露的金属硬件，但功率控制将来自 **IPMI** (或供应商特定的例如戴尔DRAC) 执行:
+
+<center>
+    <img src=./images/lab_arch4.png>
+</center>
+
 ## Next Chapter
 
 The next chapter is the start of our **hands-on labs** and will be the configuration of our 'seed host', i.e. the one we'll use for the **undercloud**, click [here][lab1](./lab01.md) to proceed.
