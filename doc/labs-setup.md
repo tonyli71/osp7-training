@@ -34,6 +34,14 @@
     <img src=./images/lab_arch4.png>
 </center>
 
+## 实验室环境
+
+实验室环境描述如下;我们有一个 **baremetal** 主机提供我们 **虚拟** 基础设施，使两个我们 **undercloud** 和 **overcloud **:
+
+<center>
+    <img src="images/osp-director-env-1.png"/>
+</center>
+
 ## Next Chapter
 
 The next chapter is the start of our **hands-on labs** and will be the configuration of our 'seed host', i.e. the one we'll use for the **undercloud**, click [here][lab1](./lab01.md) to proceed.
