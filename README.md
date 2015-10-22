@@ -7,7 +7,7 @@ RHEL OSP Director 入门培训
 
 ## 简介
 
-首先，欢迎来到 * * OSP Director * * 培训课程。它的时间是我们的荣幸，欢迎您的光临
+首先，欢迎来到 **OSP Director** 培训课程。它的时间是我们的荣幸，欢迎您的光临
 ，希望它将实用。本课程旨在让你与我们新的 OpenStack 部署工具，使您自信地与客户交>谈有关的功能，并能够部署和疑难解答 OpenStack Director的相关问题。
 
 课程设计适用教练带领和自学，您可以自定进度阅读本文，参加基于课堂课程时，你将会参
@@ -17,8 +17,12 @@ RHEL OSP Director 入门培训
 
 你需要以下准备条件以便您能进行此培训
 
-1. 40GB 以上内存、 8 核的服务器。或3台16GB内存、4核的笔记本脑（笔记本需要由两个网卡，可以是RHEL支持USB网卡）
+1. 40GB 以上内存、 8 核的服务器。
+   或
+   3台16GB内存、4核的笔记本脑（笔记本需要有 **两个网卡**，可以是RHEL支持USB网卡）。
 2. 有效的OSP红帽订阅
+   或
+   提前提供一套机器给老师，以便为您准备安装源。
 
 ## 课程安排
 
@@ -41,7 +45,7 @@ RHEL OSP Director 入门培训
 ------------- | -----------------
 **0900-1045** | 动手操作及硬件安装的介绍
 **1045-1100** | 中间休息
-**1100-1230** | **Lab 1**: 安装的种子主机
+**1100-1230** | **Lab 1**: [安装的种子主机] (./doc/lab01.md)
               | **Lab 2**: Undercloud 的配置
 **1230-1330** | 午餐
 **1330-1530** | **Lab 3**: 安装并测试Undercloud
@@ -54,29 +58,29 @@ RHEL OSP Director 入门培训
 
 时间          | 内容
 ------------- | -----------------
-**0900-1045** | **Lab 7**: Testing of Overcloud Deployment
-              | **Lab 8**: Teardown of Existing Environment and Reinstallation
+**0900-1045** | **Lab 7**: Overcloud 的测试部署
+              | **Lab 8**: 拆解现有的环境和重新安装
 **1045-1100** | 中间休息
-**1100-1230** | **Lab 9**: Advanced Configuration and Deployment of New Overcloud
-              | - Flavour matching
-              | - Custom networking configuration
-              | - Adding custom packages to overcloud nodes
-              | - Making configuration-specific changes to overcloud
+**1100-1230** | **Lab 9**: 高级的配置和部署的新 Overcloud
+              | - 味道匹配
+              | - 自定义的网络配置
+              | - 添加自定义的软件包到overcloud 节点
+              | - 特定更改 overcloud 配置
 **1230-1330** | 午餐
-**1330-1600** | Lab 9 (Continuation)
-              | **Lab 10**: Post-deployment configuration changes
+**1330-1600** | Lab 9 (继续)
+              | **Lab 10**: 部署后配置更改
 **1600-1615** | 中间休息
-**1600-1730** | **Lab 11**: Thorough testing of overcloud, including HA testing
+**1600-1730** | **Lab 11**: 彻底的测试 overcloud，包括高可用测试
 
 ### 第四天
 
 时间          | 内容
 ------------- | -----------------
-**0900-1030** | **Lab 12**: Instance HA Configuration and Testing
-**1030-1200** | **Lab 13**: Troubleshooting Lab
+**0900-1030** | **Lab 12**: 实例 HA 配置和测试
+**1030-1200** | **Lab 13**: 实验故障排除
 **1200-1300** | 午餐
-**1300-1430** | Lab 13 (Continuation)
-**1430-1500** | Closing Remarks
+**1300-1430** | Lab 13 (继续)
+**1430-1500** | 闭幕辞
 
 
 ## 实验流程
