@@ -85,7 +85,7 @@ RHEL OSP Director 入门培训
 
 ## 实验流程
 
-The **workflow** of the hands-on labs will be as follows:
+动手实验的 **工作流程** 将如下:
 
 ## 实验的原则和公约
 
