@@ -20,6 +20,44 @@
     <img src="images/osp-director-env-6.png"/>
 </center>
 
+## Undercloud 软件包的安装
+
+假设你已经已经断开您的 undercloud 节点，让我们重新连接到它，做一个小的预安装配置到节点。首先，设置主机名正确;默认情况下这是 localhost，因为它没有料想到会有 ' 云 init' 通过设置其主机名。
+
+~~~
+host# ssh root@undercloud
+undercloud# hostnamectl set-hostname undercloud.redhat.local
+undercloud# systemctl restart network.service
+~~~
+
+> **注意**: 控制台语法中，我们会请参阅本机纯粹作为"**undercloud #**"为 **根** 命令，和"**undercloud$**"为 **非特权** 命令。你可能会看到略 *不同* 控制台输出。
+
+测试包的访问并使条目 **/etc/hosts**，让我们安装在 eth1 上 '因素' 来缓解我们检索 IP 地址:
+
+~~~
+undercloud# yum install facter -y
+undercloud# ipaddr=$(facter ipaddress_eth1)
+undercloud# echo -e "$ipaddr\t\tundercloud.redhat.local\tundercloud" >> /etc/hosts
+undercloud# grep undercloud /etc/hosts
+192.168.122.253   undercloud.redhat.local undercloud
+~~~
+
+更新 undercloud 系统:
+
+~~~
+undercloud# yum -y update && reboot
+~~~
+
+现在，我们可以安装 undercloud 配置所需要的软件包。做最方便的方式，这是为包中拉 **统一 CLI**，这将依赖关系替我们管理。此外请注意，该软件包的名称取自上游 **RDO 经理** 的名字，**不是** OSP 主任。等待您的计算机以启动备份，并运行以下命令以安装软件包:
+
+~~~
+host# ssh root@undercloud
+undercloud# yum install python-rdomanager-oscplugin -y
+(...)
+~~~
+
+## 配置部署接口
+
 ## Next Lab
 
 The next lab will be the deployment of the undercloud, click [here][lab03](./lab03.md) to proceed.
