@@ -39,16 +39,16 @@ RHEL OSP Director 入门培训
 
 时间          | 内容
 ------------- | -----------------
-**0900-1045** | Introduction of Hands-on Lab Sessions & Hardware Setup
+**0900-1045** | 动手操作及硬件安装的介绍
 **1045-1100** | 中间休息
-**1100-1230** | **Lab 1**: Installation of a Seed Host
-              | **Lab 2**: Configuration of Undercloud
+**1100-1230** | **Lab 1**: 安装的种子主机
+              | **Lab 2**: Undercloud 的配置
 **1230-1330** | 午餐
-**1330-1530** | **Lab 3**: Installation and Testing of Undercloud
-              | **Lab 4**: Creation and Configuration of Basic Node Images
+**1330-1530** | **Lab 3**: 安装并测试Undercloud
+              | **Lab 4**: 创建和配置的基本节点镜像
 **1530-1550** | 中间休息
-**1550-1730** | **Lab 5**: Registering/Discovery of Overcloud Nodes
-              | **Lab 6**: Deployment of Overcloud
+**1550-1730** | **Lab 5**: 注册/发现 Overcloud 节点
+              | **Lab 6**: 部署 Overcloud
 
 ### 第三天
 
