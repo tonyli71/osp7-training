@@ -289,7 +289,7 @@ undercloud$ cat /etc/os-net-config/config.json
 {"network_config": [{"ovs_extra": ["br-set-external-id br-ctlplane bridge-id br-ctlplane"], "type": "ovs_bridge", "addresses": [{"ip_netmask": "172.16.0.1/24"}], "members": [{"type": "interface", "primary": "true", "name": "eth0"}], "name": "br-ctlplane"}]}
 ~~~
 
-This then gets used by **/usr/libexec/os-refresh-config/configure.d/20-os-net-config** to setup the network configuration by another tool named **os-net-config**:
+然后获取使用 **/usr/libexec/os-refresh-config/configure.d/20-os-net-config** 通过另一种工具设置网络配置 **os-net-config**:
 
 ~~~
 undercloud$ cat /usr/libexec/os-refresh-config/configure.d/20-os-net-config
@@ -303,13 +303,345 @@ if [ -n "$NET_CONFIG" ]; then
 fi
 ~~~
 
-This is how we end up with the networking as it was defined in the original **undercloud.conf**. Take a look at the json file to see what else gets configured by os-apply-config:
+这是如何我们结束与网络当它在原始定义 **undercloud.conf**. 看看 json 文件，看看os-apply-config还有什么配置:
 
 ~~~
 undercloud$ less /var/lib/heat-cfntools/cfn-init-data
 (...)
 ~~~
 
+## 生成的文件
 
-The next lab will be the configuration of node images for the overcloud, click [here][lab4](./lab04.md) to proceed.
+应配置了 **特定** 服务密码，你本来会猜测如何沟通你的 undercloud;值得庆幸的是 OSP 主任 **生成** 我们立即使用它所需的文件。成功部署后在 '**堆栈**' 用户的主目录，你应该有大量的文件:
+
+~~~
+undercloud$ ls -l ~
+total 16
+-rw-------. 1 stack stack  227 Jul 30 04:04 stackrc
+-rw-r--r--. 1 stack stack 5532 Jul 30 03:47 undercloud.conf
+-rw-rw-r--. 1 stack stack 1398 Jul 30 03:48 undercloud-passwords.conf
+~~~
+
+**stackrc** 文件包含大量的环境变量，我们可以源沟通我们 undercloud 通过本机 OpenStack CLI 的工具，也被称为 **运行时的配置文件**。对于那些你熟悉的概念 **keystonerc_\<user\>** 文件，这是完全相同，但为 undercloud 具体:
+
+~~~
+undercloud$ cat ~/stackrc
+export NOVA_VERSION=1.1
+export OS_PASSWORD=$(sudo hiera admin_password)
+export OS_AUTH_URL=http://172.16.0.1:5000/v2.0
+export OS_USERNAME=admin
+export OS_TENANT_NAME=admin
+export COMPUTE_API_VERSION=1.1
+export OS_NO_CACHE=True
+~~~
+
+正如你所看到的它已配置重点终结点为我们所需的凭据，记住，我们可以使用 * * hiera * * 抢了必要的数据而无需以纯文本形式存储数据，如密码。我们可以此源文件，然后使用它与我们的 undercloud 进行通信:
+
+~~~
+undercloud$ source ~/stackrc
+undercloud$ openstack host list
++-------------------------+-------------+----------+
+| Host Name               | Service     | Zone     |
++-------------------------+-------------+----------+
+| undercloud.redhat.local | consoleauth | internal |
+| undercloud.redhat.local | scheduler   | internal |
+| undercloud.redhat.local | conductor   | internal |
+| undercloud.redhat.local | compute     | nova     |
++-------------------------+-------------+----------+
+~~~
+
+除了 * * stackrc * * 文件，也是所有生成的密码，在 **undercloud-passwords.conf** 方便列表。请记住，我们的配置与我们问 OSP 主任为我们，生成我们的密码，因此他们肯定不是令人难忘:
+
+~~~
+undercloud$ tail -n5 undercloud-passwords.conf
+undercloud_rabbit_cookie=99939ed79bc494772b030ef49c144447c8841178
+undercloud_rabbit_password=e489665f96bb19e57ad94c5b87cbd92ea13117cf
+undercloud_rabbit_username=24302e50c73728274952381a33ab99b304a653d4
+undercloud_heat_stack_domain_admin_password=ffe928d7a192a7cd99d49d911a9db83753e7263b
+undercloud_swift_hash_suffix=b3d1600ecc79c62c7fc435e7880eb9fbf1710f95
+~~~
+
+最后，原 **undercloud.conf** 应仍驻留，保持不变，从原来的 undercloud 部署。
+
+## 网络配置
+
+正如我们在前一节中提到，OSP 主任用途 **os-refresh-config** 在部署时，在与一个专用的网络工具，**os-net-config** 底层主机上配置网络。所需的操作系统刷新配置脚本获取执行时它将申请网络，采取从这里 json 结构主机的配置:
+
+~~~
+undercloud$ cat /etc/os-net-config/config.json | python -m json.tool
+{
+    "network_config": [
+        {
+            "addresses": [
+                {
+                    "ip_netmask": "172.16.0.1/24"
+                }
+            ],
+            "members": [
+                {
+                    "name": "eth0",
+                    "primary": "true",
+                    "type": "interface"
+                }
+            ],
+            "name": "br-ctlplane",
+            "ovs_extra": [
+                "br-set-external-id br-ctlplane bridge-id br-ctlplane"
+            ],
+            "type": "ovs_bridge"
+        }
+    ]
+}
+~~~
+
+> **注意**: 我们使用 **os-net-config** 时部署的 undercloud * * * 和 * overcloud，所以它是重要的是熟悉它。
+
+基于 undercloud 配置文件中指定的参数，我们已经告诉我们想要的 OSP 主任我们 * * PXE / 管理 * * 必须 * * eth0 * *，我们希望我们本地的 IP 地址是 * * 172.16.0.1**。使用此信息，操作系统网络配置创建命名 OVS 桥 * * br-ctlplane * *，将用于部署我们的 overcloud，并将其附加物理 * * eth0 * * 到它的 nic:
+
+~~~
+undercloud$ sudo ovs-vsctl show
+85287db1-3efa-4c4a-b7c6-96a2d7285b50
+    Bridge br-int
+        fail_mode: secure
+        Port int-br-ctlplane
+            Interface int-br-ctlplane
+                type: patch
+                options: {peer=phy-br-ctlplane}
+        Port br-int
+            Interface br-int
+                type: internal
+        Port "tapee85e21b-0d"
+            tag: 1
+            Interface "tapee85e21b-0d"
+                type: internal
+    Bridge br-ctlplane
+        Port "eth0"
+            Interface "eth0"
+        Port phy-br-ctlplane
+            Interface phy-br-ctlplane
+                type: patch
+                options: {peer=int-br-ctlplane}
+        Port br-ctlplane
+            Interface br-ctlplane
+                type: internal
+    ovs_version: "2.3.1-git3282e51"
+~~~
+
+然后，它将对这座桥的本地计算机的 IP 地址相关联:
+
+~~~
+undercloud$ cat /etc/sysconfig/network-scripts/ifcfg-br-ctlplane
+# This file is autogenerated by os-net-config
+DEVICE=br-ctlplane
+ONBOOT=yes
+HOTPLUG=no
+NM_CONTROLLED=no
+DEVICETYPE=ovs
+TYPE=OVSBridge
+BOOTPROTO=static
+IPADDR=172.16.0.1
+NETMASK=255.255.255.0
+OVS_EXTRA="set bridge br-ctlplane other-config:hwaddr=52:54:00:eb:ee:2b -- br-set-external-id br-ctlplane bridge-id br-ctlplane"
+
+undercloud$ ip addr show br-ctlplane
+5: br-ctlplane: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN
+    link/ether 52:54:00:eb:ee:2b brd ff:ff:ff:ff:ff:ff
+    inet 172.16.0.1/24 brd 172.16.0.255 scope global br-ctlplane
+       valid_lft forever preferred_lft forever
+    inet 172.16.0.11/32 scope global br-ctlplane
+       valid_lft forever preferred_lft forever
+    inet 172.16.0.10/32 scope global br-ctlplane
+       valid_lft forever preferred_lft forever
+    inet6 fe80::5054:ff:feeb:ee2b/64 scope link
+       valid_lft forever preferred_lft forever
+~~~
+
+请注意额外的虚拟 ip 地址也-已附加到此接口 **172.16.0.10** 和 **172.16.0.11**;IPs 的不使用，但将来会当我们支持 **undercloud HA**
+
+所有的 undercloud 服务侦听这 **local_ip** 我们指定以前，即**172.16.0.1**，与 undercloud **Neutron** 例如:
+
+~~~
+undercloud$ curl -s http://172.16.0.1:9696 | python -m json.tool
+{
+    "versions": [
+        {
+            "id": "v2.0",
+            "links": [
+                {
+                    "href": "http://172.16.0.1:9696/v2.0",
+                    "rel": "self"
+                }
+            ],
+            "status": "CURRENT"
+        }
+    ]
+}
+~~~
+
+## Ironic支持 PXE 启动
+
+OSP 主任使用 PXE 启动两个用途:
+
+1. 初始 **introspection** 和 **discovery** 的 overcloud 节点-即了解 **capabilities** 为节点的 **role matching**，和 **benchmarking** 如果必要
+2. 在 **provisioning** 的具有所需的节点 **role** 在 **overcloud deployment**。
+
+为第一宗旨，undercloud 安装过程中 **os-refresh-config**  **os-config-apply**  设置 **ironic-discoverd** 从元数据生成从原始配置 **undercloud.conf**。我们使用  **dnsmasq** 为我们 DHCP 和 PXE 能力提供ironic-discoverd:
+
+~~~
+undercloud$ cat /usr/libexec/os-apply-config/templates/etc/ironic-discoverd/dnsmasq.conf
+port=0
+interface={{discovery.interface}}
+bind-interfaces
+dhcp-range={{discovery.iprange}},29
+enable-tftp
+tftp-root=/tftpboot
+dhcp-match=ipxe,175
+dhcp-boot=tag:!ipxe,undionly.kpxe,localhost.localdomain,{{local-ip}}
+dhcp-boot=tag:ipxe,http://{{local-ip}}:8088/discoverd.ipxe
+
+undercloud$ cat /etc/ironic-discoverd/dnsmasq.conf
+port=0
+interface=br-ctlplane
+bind-interfaces
+dhcp-range=172.16.0.50,172.16.0.80,29
+enable-tftp
+tftp-root=/tftpboot
+dhcp-match=ipxe,175
+dhcp-boot=tag:!ipxe,undionly.kpxe,localhost.localdomain,172.16.0.1
+dhcp-boot=tag:ipxe,http://172.16.0.1:8088/discoverd.ipxe
+~~~
+
+显然需要侦听 dnsmasq 进程 **PXE/management**，因此 "**interface=br-ctlplane**" 选项是重要以上。这 dnsmasq 服务是systemd:
+
+~~~
+undercloud$ systemctl status openstack-ironic-discoverd-dnsmasq.service
+openstack-ironic-discoverd-dnsmasq.service - PXE boot dnsmasq service for ironic-discoverd
+   Loaded: loaded (/usr/lib/systemd/system/openstack-ironic-discoverd-dnsmasq.service; enabled)
+   Active: active (running) since Thu 2015-07-30 04:04:13 EDT; 1 day 3h ago
+ Main PID: 18814 (dnsmasq)
+   CGroup: /system.slice/openstack-ironic-discoverd-dnsmasq.service
+           └─18814 /sbin/dnsmasq --conf-file=/etc/ironic-discoverd/dnsmasq.conf
+~~~
+
+如果我们看看这个过程 (**18814**) 你可以看到它在与关联的所有 IP 地址上侦听 **br-ctlplane** 界面:
+
+~~~
+undercloud$ sudo netstat -tunpl | grep dnsmasq
+udp        0      0 0.0.0.0:67              0.0.0.0:*                           18814/dnsmasq
+udp        0      0 127.0.0.1:69            0.0.0.0:*                           18814/dnsmasq
+udp        0      0 172.16.0.1:69           0.0.0.0:*                           18814/dnsmasq
+udp        0      0 172.16.0.11:69          0.0.0.0:*                           18814/dnsmasq
+udp        0      0 172.16.0.10:69          0.0.0.0:*                           18814/dnsmasq
+udp6       0      0 ::1:69                  :::*                                18814/dnsmasq
+udp6       0      0 fe80::5054:ff:feeb:e:69 :::*                                18814/dnsmasq
+~~~
+
+当我们开始节点的反思时，Ironic权力节点上通过相应的电源管理界面，他们 PXE 引导通过 **ironic-discoverd** 和他们下载一个临时的形象。此图像然后送入数据回Ironic数据库，我们可以用它来 **角色匹配**。
+
+PXE 镜像传递通过 HTTP 通过虚拟的主机端口上上文 **8088**:
+
+~~~
+undercloud$ head -n3 /etc/httpd/conf.d/10-ipxe_vhost.conf
+Listen 8088
+<VirtualHost *:8088>
+    DocumentRoot "/httpboot"
+
+undercloud$ cat /httpboot/discoverd.ipxe
+#!ipxe
+
+dhcp
+
+kernel http://172.16.0.1:8088/discovery.kernel discoverd_callback_url=http://172.16.0.1:5050/v1/continue RUNBENCH=0 ip=${ip}:${next-server}:${gateway}:${netmask} BOOTIF=${mac}
+initrd http://172.16.0.1:8088/discovery.ramdisk
+boot
+~~~
+
+> **注意**: 鹰眼当中你会注意到 **discovery.kernel** 和 **discovery.ramdisk** 文件中当前不存在 **/httpboot**;别担心，我们将创建这些在下一个实验。
+
+所以这只是 **discovery** 过程，哪些关于实际**provisioning** 的 overcloud 部署期间的节点?
+当我们提供一个节点时，它的 MAC 地址是 **列入黑名单** 与 **ironic-discoverd** dnsmasq 处理，因此可以有没有冲突，和管理 DHCP 和 PXE 是照顾Neutron运行在 undercloud 内。
+
+此Neutron服务器管理子网 overcloud 的管理网络，我们使用 **172.16.0.0/24** 位于同一子网，但我们早些时候在 undercloud.conf 文件 中定义的固定范围 :
+
+~~~
+undercloud$ source ~/stackrc
+undercloud$ neutron subnet-list
+undercloud$ subnet_id=$(neutron subnet-list | grep 172.16.0.0 | awk '{print $2;}')
+undercloud$ neutron subnet-show $subnet_id
++-------------------+----------------------------------------------------------------+
+| Field             | Value                                                          |
++-------------------+----------------------------------------------------------------+
+| allocation_pools  | {"start": "172.16.0.20", "end": "172.16.0.120"}                |
+| cidr              | 172.16.0.0/24                                                  |
+| dns_nameservers   |                                                                |
+| enable_dhcp       | True                                                           |
+| gateway_ip        | 172.16.0.1                                                     |
+| host_routes       | {"destination": "169.254.169.254/32", "nexthop": "172.16.0.1"} |
+| id                | 4e457dba-2a86-4f24-bc14-09466a880ca6                           |
+| ip_version        | 4                                                              |
+| ipv6_address_mode |                                                                |
+| ipv6_ra_mode      |                                                                |
+| name              |                                                                |
+| network_id        | 0b452b19-ebbb-40d2-88b8-f8924e63eac1                           |
+| subnetpool_id     |                                                                |
+| tenant_id         | 74ddd233842043269955550d890953ab                               |
++-------------------+----------------------------------------------------------------+
+~~~
+
+> **注意**: 此网络的配置是由照顾 **/usr/libexec/os-refresh-config/post-configure.d/98-undercloud-setup** 通过数据在 **/var/lib/heat-cfntools/cfn-init-data** 举行
+
+所以后 overcloud 的部署，启动任何节点收到他们 **分配** IP 地址并指示到的 undercloud Neutron服务器启动 **PXE**。Neutron服务器使用 **dnsmasq** 按正常传递这些指令;并且在网络命名空间内的听:
+
+~~~
+undercloud$ sudo ip netns list
+qdhcp-0b452b19-ebbb-40d2-88b8-f8924e63eac1
+
+undercloud$ netns=$(ip netns list | grep qdhcp)
+undercloud$ sudo ip netns exec $netns netstat -tunpl
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 172.16.0.20:53          0.0.0.0:*               LISTEN      18577/dnsmasq
+tcp6       0      0 fe80::f816:3eff:fe4b:53 :::*                    LISTEN      18577/dnsmasq
+udp        0      0 172.16.0.20:53          0.0.0.0:*                           18577/dnsmasq
+udp        0      0 0.0.0.0:67              0.0.0.0:*                           18577/dnsmasq
+udp6       0      0 fe80::f816:3eff:fe4b:53 :::*                                18577/dnsmasq
+~~~
+
+这 dnsmasq 进程侦听打开 vSwitch 集成桥坐着一个接口 (**br-int**) 根据其他 OpenStack 部署:
+
+~~~
+undercloud$ ps ax | egrep 'dnsmasq|18577'
+18577 ?        S      0:00 dnsmasq --no-hosts --no-resolv --strict-order --bind-interfaces --interface=tapee85e21b-0d --except-interface=lo --pid-file=/var/lib/neutron/dhcp/0b452b19-ebbb-40d2-88b8-f8924e63eac1/pid --dhcp-hostsfile=/var/lib/neutron/dhcp/0b452b19-ebbb-40d2-88b8-f8924e63eac1/host --addn-hosts=/var/lib/neutron/dhcp/0b452b19-ebbb-40d2-88b8-f8924e63eac1/addn_hosts --dhcp-optsfile=/var/lib/neutron/dhcp/0b452b19-ebbb-40d2-88b8-f8924e63eac1/opts --dhcp-leasefile=/var/lib/neutron/dhcp/0b452b19-ebbb-40d2-88b8-f8924e63eac1/leases --dhcp-range=set:tag0,172.16.0.0,static,86400s --dhcp-lease-max=256 --conf-file=/etc/dnsmasq-ironic.conf
+~~~
+
+它不是完全清楚在详细输出上面，但这使用自来水设备附加到 **br-int**，这反过来 **patch** 到 **br-ctlplane**
+
+~~~
+undercloud$ sudo ovs-vsctl list-ifaces br-int
+int-br-ctlplane
+tapee85e21b-0d
+~~~
+
+> **注意**: 我们将探索 PXE 资源调配的 overcloud 中的节点 **后** 实验。
+
+最后，让我们创建另一个 * * 快照 * * 的我们 * * undercloud * * 虚拟机的这样我们有另一个已知的工作状态，我们可以 * * 回复 * * 如果需要向回。请注意，你将需要有一个控制台到你 * * 上运行这基础主机 * * 不 * * undercloud * * 机:
+
+~~~
+undercloud$ exit
+undercloud# exit
+host# virsh snapshot-create-as undercloud undercloud-snap-lab3
+~~~
+
+## 这个实验的结果
+
+通过完成这个实验你应该达到以下目标:
+
+* 理解的 OSP 主任如何使用 **instack** 和 **os-refresh-config** 部署 undercloud
+* 认识到 * * 输出文件 * *，OSP 主任叶与你进一步使用
+* 理解 OSP 主任的配置 * * undercloud 网络 * * 通过 os 网配置
+* 将熟悉 undercloud 用Ironic PXE 启动配置
+
+## 下一个实验
+
+下一个实验将节点图像为 overcloud 的配置，请点击 [这里][lab4](./lab04.md) 
 
