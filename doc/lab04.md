@@ -18,6 +18,11 @@ Red Hat 提供 " **预构建的**" 镜像可用于大多数客户overcloud部署
 
 这第四个实验将引导您完成上面; 生成的 overcloud 镜像将用于后续的实验，估计的完成时间约 **90 分钟**:
 
+* **创造** 所有类型的 **overcloud** 镜像
+* **调查** OSP Director 如何创建 overcloud 镜像
+* 让 **创建后修改** 的镜像以适合我们的需要
+* 
+
 ## Next Lab
 
 The next lab will be the creation and registration of your overcloud nodes, ready for deployment, click [here][lab5](./lab05.md) to proceed.
