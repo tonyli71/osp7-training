@@ -16,7 +16,7 @@ Red Hat 提供 " **预构建的**" 镜像可用于大多数客户overcloud部署
 
 > **注意**: " **预构建的**" 镜像可在以下链接找到: **https://access.redhat.com/site/products/red-hat-enterprise-linux-openstack-platform/**
 
-这第四个实验将引导您完成上面; 生成的 overcloud 镜像将用于后续的实验，估计的完成时间约 ��� **90 分钟**:
+这第四个实验将引导您完成上面; 生成的 overcloud 镜像将用于后续的实验，估计的完成时间约 **90 分钟**:
 
 ## Next Lab
 
