@@ -91,6 +91,18 @@ host# virsh list --all
 host# rm -f /tmp/nodes.txt /tmp/overcloud-node*
 ~~~
 
+## 创建新的生产云虚拟机
+
+<br><center>
+
+Node Role        | vCPU Count  | Memory Allocation | Storage Allocation
+------------| ----------- | -------------| ---------------
+Controller  | <center>4</center> | <center>8GB</center> | <center>1x30GB</center>
+Compute     | <center>2</center> | <center>6GB</center> | <center>1x20GB</center>
+Storage     | <center>2</center> | <center>4GB</center> | <center>2x20GB</center>
+
+</center><br>
+
 
 ## 下一实验
 
