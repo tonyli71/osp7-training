@@ -1,7 +1,14 @@
-# Lab 8: Teardown and Rebuild
+# 实验八： 推到与重建
 
-## Introduction
+## 序言
 
-## Next Lab
+目前我们已经部署了一个基本生产云并且对其基本功能进行了测试。是时候进行推到重建。本实验我们将进行高级的部署，我们会有不同的硬件描述、高级的网络（包括VLAN的隔离与绑定）以及Ceph的集成。因此我们会建立一组新的虚拟机以配合我们的实验。
 
-The next lab will be the **deployment** of a new **advanced** overcloud using the machines that were just configured and **imported** into Ironic, click [here][lab9](./lab09.md) to proceed.
+我们会保留现存的undercloud,只需清理数据即可。目前本版本的OSP导演尚未能支持多生产云的部署，因此我们要对环境进行清理。
+
+本实验预期要 **45 分钟
+
+
+## 下一实验
+
+在下一实验我们将进行 **高级的** 生产云 **部署** , 我们将我已配置的机器 **导入** 到Ironic, 点击 [这里](./lab09.md) 进入。
