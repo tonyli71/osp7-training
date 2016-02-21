@@ -13,23 +13,72 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
+$enabled  = true
+$cluster  = true
+$bootstrap = true
+$wsrep_cluster_members  = [hiera('controller_host')]
+$wsrep_sst_username     = 'wsrep_sst'
+$wsrep_sst_password     = 'wspass'
+
+
 if count(hiera('ntp::servers')) > 0 {
   include ::ntp
 }
 
 include ::rabbitmq
 
-# TODO Galara
-class { 'mysql::server':
-  override_options => {
-    'mysqld' => {
-      'bind-address' => hiera('controller_host'),
-      'max_connections' => hiera('mysql_max_connections'),
-      'open_files_limit' => '-1',
+# modify for HA base on Galara
+# Install and configure MySQL Server
+if $cluster {
+    package { "mariadb-server":
+            ensure => "absent",
+            name     => 'mariadb-server',
+            provider => 'yum',
+            notify   => Class['mysql::server'],
     }
-  },
-  restart          => true
+    package { 'galera':
+            ensure   => 'installed',
+            notify   => Class['mysql::server'],
+    }
+   service { 'galera':
+      ensure => true,
+      name   => 'garbd',
+      enable => true,
+   }
+   class { 'galera::server':
+           create_mysql_resource => false,
+           wsrep_bind_address => hiera('controller_host'),
+           wsrep_cluster_name   => 'galera_cluster',
+           wsrep_sst_method     => 'rsync',
+           wsrep_sst_username   => $wsrep_sst_username,
+           wsrep_sst_password   => $wsrep_sst_password,
+           wsrep_cluster_members => $wsrep_cluster_members,
+           bootstrap  => $bootstrap,
+   }
+   class { 'mysql::server':
+     package_name => 'mariadb-galera-server',
+     override_options => {
+       'mysqld' => {
+         'bind-address' => hiera('controller_host'),
+         'max_connections' => hiera('mysql_max_connections'),
+         'open_files_limit' => '-1',
+       }
+     },
+     restart          => true
+   }
+} else {
+   class { 'mysql::server':
+     override_options => {
+       'mysqld' => {
+         'bind-address' => hiera('controller_host'),
+         'max_connections' => hiera('mysql_max_connections'),
+         'open_files_limit' => '-1',
+       }
+     },
+     restart          => true
+   }
 }
+
 
 # FIXME: this should only occur on the bootstrap host (ditto for db syncs)
 # Create all the database schemas
