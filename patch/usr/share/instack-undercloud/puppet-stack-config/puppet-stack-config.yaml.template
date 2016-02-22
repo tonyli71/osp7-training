@@ -132,9 +132,9 @@ neutron::agents::ml2::ovs::enable_tunneling: True
 neutron::agents::ml2::ovs::local_ip: {{LOCAL_IP}}
 neutron_flat_networks: ''
 neutron_mechanism_drivers: openvswitch
-neutron_bridge_mappings: ctlplane:br-ctlplane,pxe:br-pxe
-neutron_public_interface: {{LOCAL_INTERFACE}},{{UNDERCLOUD_PXE_INTERFACE}}
-neutron_physical_bridge: br-ctlplane,br-pxe
+neutron_bridge_mappings: ctlplane:br-ctlplane,pxe:br-pxe,om:br-om,bmc:br-bmc,api:br-api
+neutron_public_interface: {{LOCAL_INTERFACE}},{{PXE_INTERFACE}},{{API_INTERFACE}},{{BMC_INTERFACE}},{{OM_INTERFACE}}
+neutron_physical_bridge: br-ctlplane,br-pxe,br-om,br-api,br-bmc
 neutron::server::auth_password: {{UNDERCLOUD_NEUTRON_PASSWORD}}
 neutron::agents::metadata::auth_password: {{UNDERCLOUD_NEUTRON_PASSWORD}}
 neutron::agents::dhcp::dhcp_domain: ''

@@ -31,13 +31,45 @@ context = {
     'UNDERCLOUD_SERVICE_CERTIFICATE': os.environ.get('UNDERCLOUD_SERVICE_CERTIFICATE', ''),
     'UNDERCLOUD_PUBLIC_VIP': os.environ.get('UNDERCLOUD_PUBLIC_VIP', ''),
     'UNDERCLOUD_ADMIN_VIP': os.environ.get('UNDERCLOUD_ADMIN_VIP', ''),
-    'UNDERCLOUD_PXE_INTERFACE': os.environ.get('UNDERCLOUD_PXE_INTERFACE', 'eth0'),
+    
+    'UNDERCLOUD_CLUSTER_MEMBERS' : os.environ.get('UNDERCLOUD_CLUSTER_MEMBERS', ''),
+    'UNDERCLOUD_CLUSTER_VIP' : os.environ.get('UNDERCLOUD_CLUSTER_VIP', ''),
+
+    'DEFAULT_GATEWAY' : os.environ.get('DEFAULT_GATEWAY', ''),
+
+    'PXE_INTERFACE': os.environ.get('PXE_INTERFACE', 'eth0'),
+    'OM_INTERFACE': os.environ.get('OM_INTERFACE', 'eth2'),
+    'API_INTERFACE': os.environ.get('API_INTERFACE', 'eth3'),
+    'BMC_INTERFACE': os.environ.get('BMC_INTERFACE', 'eth4'),
+
     'PXE_INTERFACE_IP': os.environ.get('PXE_INTERFACE_IP', '192.1.2.1/24'),
     'PXE_IP': os.environ.get('PXE_INTERFACE_IP', '192.1.2.1/24').split('/')[0],
     'PXE_DHCP_START': os.environ.get('PXE_DHCP_START', '192.0.2.5'),
     'PXE_DHCP_END': os.environ.get('PXE_DHCP_END', '192.0.2.24'),
     'PXE_NETWORK_CIDR': os.environ.get('PXE_NETWORK_CIDR', '192.0.2.0/24'),
     'PXE_NETWORK_GATEWAY': os.environ.get('PXE_NETWORK_GATEWAY', '192.0.2.1'),
+
+    'BMC_INTERFACE_IP': os.environ.get('BMC_INTERFACE_IP', '192.1.2.1/24'),
+    'BMC_IP': os.environ.get('BMC_INTERFACE_IP', '192.1.2.1/24').split('/')[0],
+    'BMC_DHCP_START': os.environ.get('BMC_DHCP_START', '192.0.2.5'),
+    'BMC_DHCP_END': os.environ.get('BMC_DHCP_END', '192.0.2.24'),
+    'BMC_NETWORK_CIDR': os.environ.get('BMC_NETWORK_CIDR', '192.0.2.0/24'),
+    'BMC_NETWORK_GATEWAY': os.environ.get('BMC_NETWORK_GATEWAY', '192.0.2.1'),
+
+    'OM_INTERFACE_IP': os.environ.get('OM_INTERFACE_IP', '192.1.2.1/24'),
+    'OM_IP': os.environ.get('OM_INTERFACE_IP', '192.1.2.1/24').split('/')[0],
+    'OM_DHCP_START': os.environ.get('OM_DHCP_START', '192.0.2.5'),
+    'OM_DHCP_END': os.environ.get('OM_DHCP_END', '192.0.2.24'),
+    'OM_NETWORK_CIDR': os.environ.get('OM_NETWORK_CIDR', '192.0.2.0/24'),
+    'OM_NETWORK_GATEWAY': os.environ.get('OM_NETWORK_GATEWAY', '192.0.2.1'),
+
+    'API_INTERFACE_IP': os.environ.get('API_INTERFACE_IP', '192.1.2.1/24'),
+    'API_IP': os.environ.get('API_INTERFACE_IP', '192.1.2.1/24').split('/')[0],
+    'API_DHCP_START': os.environ.get('API_DHCP_START', '192.0.2.5'),
+    'API_DHCP_END': os.environ.get('API_DHCP_END', '192.0.2.24'),
+    'API_NETWORK_CIDR': os.environ.get('API_NETWORK_CIDR', '192.0.2.0/24'),
+    'API_NETWORK_GATEWAY': os.environ.get('API_NETWORK_GATEWAY', '192.0.2.1'),
+
 }
 
 with open(template) as f:
