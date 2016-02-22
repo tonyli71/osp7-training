@@ -6,7 +6,7 @@ export GATEWAY_IP=$(os-apply-config --key default-gateway --type netaddress)
 
 if [ -n "$GATEWAY_IP" ]; then
 
-    route add default gw $GATEWAY_IP
+    route add default gw $GATEWAY_IP || true
 
     sed -i "/^GATEWAY/d" /etc/sysconfig/network
     echo "GATEWAY=$GATEWAY_IP" >> /etc/sysconfig/network
